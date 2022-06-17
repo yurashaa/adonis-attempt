@@ -21,6 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 import '../Examples/Routes'
+import '../Examples/QueryBuilder'
 
 Route.get('/', async () => {
   return { hello: 'world' }
