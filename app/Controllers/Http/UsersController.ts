@@ -10,7 +10,7 @@ export default class UsersController {
    * Query builder
    */
   public async createQB({ request }: HttpContextContract) {
-    const { name, password } = request.body()
+    const { name, password, email } = request.body()
 
     const hashPassword = await Hash.make(password)
 
@@ -20,6 +20,7 @@ export default class UsersController {
       .insert({
         id: uuid(),
         name,
+        email,
         password: hashPassword
       })
   }
@@ -28,8 +29,8 @@ export default class UsersController {
    * ORM
    */
   public create({ request }: HttpContextContract) {
-    const { name, password } = request.body()
+    const { name, password, email } = request.body()
 
-    return User.create({ name, password });
+    return User.create({ name, password, email });
   }
 }

@@ -132,4 +132,36 @@ List of all available hooks can be found [here](https://docs.adonisjs.com/guides
 
 *Note: Understanding the $dirty property - the `$dirty` object only contains the changed values.*
 
+---
+
+### [Authentication](https://docs.adonisjs.com/guides/auth/introduction)
+
+AdonisJS comes with a fully fledged authentication system to authenticate the users of your application using sessions,
+basic auth or API tokens.
+
+Install and configure package
+
+```
+npm i @adonisjs/auth
+
+node ace configure @adonisjs/auth
+```
+
+The configuration for the auth package is stored inside the  `./config/auth.ts` file. Inside this file you can define one or 
+more guards to authenticate users. A guard is a combination of a user provider and one of the available authentication 
+driver.
+
+Adonis suggest 3 ways of using Auth flow:
+
+- **Web Guard usage**. The web guard uses sessions/cookies to login a user. You must use the web guard when creating a
+server rendered application, or for an API having a first-party client running on the same domain/sub-domain.
+
+- **API tokens Guard usage**. The API guard uses the database-backed opaque access token to authenticate the user 
+requests. You may want to use the API guard when creating an API that should be accessed by a third-party client, or 
+for any other system that does not support cookies.
+
+- **Basic auth Guard usage**. The basic auth guard uses the HTTP basic authentication for authenticating the requests.
+The basic auth guard relies on the underlying user provider to lookup and validate the user credentials
+
+
 
