@@ -12,6 +12,9 @@
       "Contracts/*": ["./contracts/*"],
       "Database/*": ["./database/*"]
     },
-    "types": ["@adonisjs/core", "@adonisjs/repl", "@japa/preset-adonis/build/adonis-typings"]
-  }
+    "types": ["@adonisjs/core", "@adonisjs/repl", "@adonisjs/lucid", "@japa/preset-adonis/build/adonis-typings"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+
 }
