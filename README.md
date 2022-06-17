@@ -163,5 +163,170 @@ for any other system that does not support cookies.
 - **Basic auth Guard usage**. The basic auth guard uses the HTTP basic authentication for authenticating the requests.
 The basic auth guard relies on the underlying user provider to lookup and validate the user credentials
 
+---
 
+### [Security](https://docs.adonisjs.com/guides/security/web-security)
+
+#### CSRF protection
+
+AdonisJS generates a unique token (known as CSRF token) for every HTTP request and associates it with the user session 
+for later verification. Since, the token is generated on the backend, the malicious website has no way of getting 
+access to it.
+
+The token must be present alongside the other form fields in order for CSRF check to pass. You can access it using the 
+`csrfField` inside your Edge templates.
+
+#### CSP
+
+CSP (Content security policy) helps you define the trusted sources for loading and executing scripts, styles, fonts, etc.
+and reduce the risk of XSS attacks.
+
+#### DNS prefetching
+
+Using the `dnsPrefetch` setting from the `./config/shield.ts` file, you can control the behavior for the 
+X-DNS-Prefetch-Control header.
+
+#### Configuration
+
+List of configuration options can be found in `./config/shield.ts`
+
+### [Encryption](https://docs.adonisjs.com/guides/security/encryption)
+
+You can make use of the AdonisJS encryption module to encrypt and decrypt values in your application.
+
+```ts
+import Encryption from '@ioc:Adonis/Core/Encryption'
+
+const encrypted = Encryption.encrypt('hello-world')
+```
+
+### [Hashing](https://docs.adonisjs.com/guides/security/hashing)
+
+AdonisJS Hash module allows you to hash the values using bcrypt or Argon2, along with the option to add a custom
+hashing driver.
+
+List of configuration options can be found in `./config/hash.ts`
+
+Example of using hashing in ORM Hooks:
+```ts
+import Hash from '@ioc:Adonis/Core/Hash';
+
+@beforeSave()
+  public static async hashPassword(user: User) {
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password)
+    }
+  }
+```
+
+### [Signed URLs](https://docs.adonisjs.com/guides/security/signed-urls)
+
+Adonis provides ability to generate URL with a hash signature appended to it. Hash is created to be sure that URL is not 
+modified or tampered with.
+
+Example:
+
+```ts
+Route.makeSignedUrl('verifyEmail', {
+  email: 'foo@bar.com',
+})
+
+// /verify/foo@bar.com?signature=eyJtZXNzYWdlIjoiL3Zlcmlme
+```
+
+---
+
+## Comparison with ExpressJS
+
+### *Architecture*
+
+**Adonis**
+
+AdonisJS is an MVC framework. MVC stands for Model, Views, and Controllers.
+
+Every AdonisJS project ships with a set of folders and files. We need to understand the folder structure first in order 
+to work with it.
+
+**Express**
+
+ExpressJS is a minimalist web framework. It gives you the freedom and flexibility to work with any database, ORM or 
+folder structure.
+
+### *Routing*
+
+**Adonis**
+
+Adonis gives us the option to bind routes to controllers, group routes, create REST resources with them.
+
+**Express**
+
+Express router is pretty basic, but it does the job.
+
+### *ORM*
+
+ORM stands for Object Relational Mapping. Evry modern full-featured framework ships with its own ORM.
+
+ORM is very helpful while working with database queries, tables, table relationships.
+
+**Adonis**
+
+AdonisJS has its own ORM called [Lucid](https://preview.adonisjs.com/guides/database/introduction). It’s a very powerful
+tool that can quickly build queries, create and handle migrations, can run seeds and factories, and also provides data
+modeling.
+
+**Express**
+
+Express does not ship with an ORM. However, there are multiple 3rd party ORM available for NodeJS which can be used with Express.
+
+Sequelize is a really good ORM for NodeJS and can work with Express.
+
+### *Authentication*
+
+**Adonis**
+
+Adonis 5 ships with its own authentication system that can save your time in production.
+
+It supports 3 different types of authentication – Web sessions, API tokens, and basic HTTP authentication as well.
+
+**Express**
+
+Express JS does not have an inbuilt authentication system. There are tools like Okta which can be integrated with 
+ExpressJS to handle authentication.
+
+### *Templating*
+
+**Adonis**
+
+AdonisJS ships with its own templating engine called Edge. You can use loops, add conditions, create layouts, create 
+components, and a few more.
+
+Edge also provides a tool to inspect and debug templates with it.
+
+**Express**
+
+Express does not have any templating engine out of the box. However, you can create your own templating engine with the
+app.engine(ext, callback)method.
+
+Creating your own templating engine may sound interesting but it’s a time-consuming process.
+
+### *Sending mails*
+
+You can use the official [adonisjs/mail](https://preview.adonisjs.com/guides/mail) package to send emails from your 
+application. It uses [NodeMailer](https://nodemailer.com/) internally to send emails.
+
+Also, it has inbuilt support for SMTP, AWS SES, Mailgun, and Sparkpost.
+
+We can also use Nodemailer with Express. However, with Express we need the set the drivers manually.
+
+### *Performance*
+
+AdonisJS 5 has added a lot of amazing features and improvements.
+
+The HTTP server is one of those. It’s almost as fast as Fastify.
+
+
+| Framework | Version | Router | Req/sec |
+|-----------|---------|--------|---------|
+| Fastify   | 2.0.0   | Yes    | 58,740  |
+| Adonis    | 1.8.1   | Yes    | 54,832  |
 

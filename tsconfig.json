@@ -32,7 +32,8 @@
       "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/auth",
       "@adonisjs/session",
-      "@adonisjs/redis"
+      "@adonisjs/redis",
+      "@adonisjs/shield"
     ],
     "noUnusedLocals": false,
     "noUnusedParameters": false
